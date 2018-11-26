@@ -1,5 +1,5 @@
 
-var PORT = process.env.PORT || 8000;
+var port = process.env.PORT || 8000;
 var mongojs = require("mongojs");
 
 var db = mongojs('mongodb://shiv:master1@ds055525.mlab.com:55525/puzzlecubedb', ['score'])
@@ -8,6 +8,7 @@ var db = mongojs('mongodb://shiv:master1@ds055525.mlab.com:55525/puzzlecubedb', 
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client/index.html');
 });
@@ -118,7 +119,7 @@ app.post('/api/times', (req, res) => {
 });
 
 app.use('/client', express.static(__dirname + '/client'));
-server.listen(PORT);
+server.listen(port);
 console.log("server listening on port: " + PORT);
 
 
