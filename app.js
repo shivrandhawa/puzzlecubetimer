@@ -1,5 +1,5 @@
 
-var port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 var mongojs = require("mongojs");
 
 var db = mongojs('mongodb://shiv:master1@ds055525.mlab.com:55525/puzzlecubedb', ['score'])
@@ -119,8 +119,9 @@ app.post('/api/times', (req, res) => {
 });
 
 app.use('/client', express.static(__dirname + '/client'));
-server.listen(port);
-console.log("server listening on port: " + PORT);
+server.listen(port, () => {
+    console.log("App is running on port " + port);
+});
 
 
 
