@@ -1,0 +1,14 @@
+{
+    "request": {
+        "href": "puzzlecubeurl/api/times/",
+        "userid": userid,
+        "token": token
+    },
+    "badgeData": [
+        {
+            "link": "linktopuzzlecube.com",
+            "icon-url": "url",
+            "text": "Best Time: 00 : 14 . 791"
+        }
+    ]
+}

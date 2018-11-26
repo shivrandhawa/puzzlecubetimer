@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<body background="/client/rubiks.jpg">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>title</title>
+        <!-- socket CDN -->
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <link rel="stylesheet" href="/client/style.css" type="text/css">
+
+
+    </head>
+
+    <body>
+
+        <div id="signDiv">
+            UN:
+            <input type="text" id="signin_username">
+            <br> PASS:
+            <input type="text" id="signin_password">
+            <button id="signUp">Sign up!</button>
+            <button id="signIn">Sign In!</button>
+        </div>
+
+        <div id=timerDiv style="display:none">
+            <h1 id="timer">00 : 00 . 000</h1>
+            <div>
+                <button id="toggle" onclick="start()">Start</button>
+                <button id="reset" onclick="stop()">Stop</button>
+                <button id="saveTime" onclick="send_time()">Send Time</button>
+            </div>
+            <div id="chatText" style="width:500px;height:100px;overflow-y:scroll">
+                <div>Chat with others!
+                </div>
+            </div>
+
+            <form id="chatForm">
+                <input id="chatInput" type="text" style="width:500px"></input>
+            </form>
+        </div>
+
+
+        <script src="client/stopwatch.js"></script>
+    </body>
+
+</html>
+<script>
+    var socket = io();
+    //signin variables
+    var signDiv = document.getElementById('signDiv');
+    var usernameText = document.getElementById('signin_username');
+    var passwordText = document.getElementById('signin_password');
+    var signinBtn = document.getElementById('signIn');
+    var signupBtn = document.getElementById('signUp');
+    var timerDiv = document.getElementById('timerDiv');
+
+
+    var chatText = document.getElementById('chatText');
+    var chatInput = document.getElementById('chatInput');
+    var chatForm = document.getElementById('chatForm');
+
+    //emit a package called signin that has the value of username and password boxes
+    //TODO: change username to un   and change password to pass
+    signinBtn.onclick = () => {
+        socket.emit('signin', { username: usernameText.value, password: passwordText.value })
+    }
+
+    signupBtn.onclick = () => {
+        socket.emit('signup', { username: usernameText.value, password: passwordText.value })
+    }
+
+    socket.on('signin-res', (data) => {
+        if (data.success) {
+            signDiv.style.display = 'none'
+            timerDiv.style.display = 'inline-block';
+        }
+        else
+            alert("sign in failed");
+    });
+    //alert  boxes.
+    socket.on('signup-res', (data) => {
+        if (data.success) {
+            alert('signup successful')
+        }
+        else
+            alert('signup unsuccessful')
+    });
+
+    //timer variables
+    var timer = document.getElementById('timer');
+    var toggleBtn = document.getElementById('toggle');
+    var resetBtn = document.getElementById('reset');
+    var watch = new Stopwatch(timer);
+
+
+    function start() {
+        watch.start();
+    }
+
+    function stop() {
+        toggleBtn.textContent = 'Start';
+        watch.stop();
+    }
+
+    var send_time = data => {
+        var curr_time = timer.innerText;
+
+        socket.emit('catch_this', curr_time);
+    }
+
+    socket.on('displayMsg', d => {
+        chatText.innerHTML += '<div>' + d + '</div>';
+        console.log('====================================');
+        console.log(d);
+        console.log('====================================');
+    })
+    chatForm.onsubmit = e => {
+        e.preventDefault();
+        if (chatInput.value[0] === '!')
+            socket.emit('command', chatInput.value.slice(1))
+        else if (chatInput.value[0] === '/') {
+            var new_name = chatInput.value.slice(1)
+
+            socket.emit('namer', chatInput.value.slice(1))
+
+            socket.emit('sendMsg', "name changed");
+        }
+        else
+            socket.emit('sendMsg', chatInput.value);
+        chatInput.value = '';
+    }
+
+</script>
