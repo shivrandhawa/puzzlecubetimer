@@ -86,7 +86,7 @@ app.post('/api/times', (req, res) => {
 
     }
     else {
-        if (token != "tzznk") {
+        if (token != "tzznk") { //TODO: puzzlecube token
             res.status(403);
             res.send("invalid authorization token");
         } else {
@@ -157,7 +157,6 @@ var isValidPass = (data, cb) => {
     });
 }
 
-
 var Player = id => {
     var self = {
         time: 0,
@@ -204,7 +203,6 @@ io.sockets.on('connection', socket => {
             }
         })
     });
-
 
 
     var player = Player(socket.id);
