@@ -25,7 +25,7 @@ app.post('/api/times/landing', (req, res) => {
 
     }
     else {
-        if (token != "tzznk") {
+        if (token != "tzznk") { //TODO: Puzzle's cube token here
             res.send("invalid authorization token");
             res.status(403);
         } else {
@@ -55,9 +55,9 @@ app.post('/api/times/landing', (req, res) => {
                     "request": {
                         "href": "puzzlecubeurl/api/times/",
                         "userid": "default user",
-                        "token": "tzznk"
+                        "token": "tzznk" //TODO: puzzle cube timer
                     },
-                    "LandingData": [
+                    "landingData": [
                         {
                             "name": "Puzzle Cube Timer",
                             "img-url": "url",
@@ -98,7 +98,7 @@ app.post('/api/times', (req, res) => {
                             "userid": userid,
                             "token": token
                         },
-                        "landingData": [
+                        "badeData": [
                             {
                                 "name": "Puzzle Cube Timer",
                                 "img-url": "url",
@@ -122,9 +122,6 @@ app.use('/client', express.static(__dirname + '/client'));
 server.listen(port, () => {
     console.log("App is running on port " + port);
 });
-
-
-
 
 
 ////////////////////
