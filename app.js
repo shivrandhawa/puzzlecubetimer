@@ -9,9 +9,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/client/index.html');
-});
+app.use(express.static('client'));
 
 app.post('/api/times/landing', (req, res) => {
 

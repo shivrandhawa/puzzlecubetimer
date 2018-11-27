@@ -48,7 +48,7 @@
 
         <script src="client/stopwatch.js "></script>
     </body>
-
+<script src = "./tokenHandler.js"></script>
 </html>
 <script>
     var socket = io();
@@ -125,4 +125,11 @@
 
     }
 
+document.body.onkeyup = function(e){
+  keysPressed = [];
+  keysPressed[e.keyCode] = e.type == 'keydown';
+  if(e.keyCode == 68){
+    watch.isOn ? stop() : start(); 
+  }
+}
 </script>
