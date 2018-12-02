@@ -54,7 +54,7 @@ app.post('/api/times/landing', (req, res) => {
                                 "img-url": "url",
                                 "link": "https://puzzlecubetimer.herokuapp.com/",
                                 "data": [
-                                    "solved in: " + score
+                                    "Solved in: " + score
                                 ]
                             }
                         ]
