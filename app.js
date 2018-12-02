@@ -1,3 +1,8 @@
+const dotenv = require('dotenv').config();
+const log = require('log4js').getLogger();
+log.level = process.env.LOG_LEVEL;
+
+const attachBadgeBookUserToSocket = require('./server/badgebook-token-handler');
 
 const port = process.env.PORT || 8000;
 var mongojs = require("mongojs");
@@ -172,10 +177,22 @@ Player.connect = (socket) => {
 
 var io = require('socket.io')(server, {});
 
-io.sockets.on('connection', socket => {
+io.sockets.on('connection', async socket => {
     console.log("socket connection");
     socket.id = Math.random();
+    console.log();
     PLAYERS[socket.id] = socket;
+
+    // Try to get, validate, set up, and validate badgebook user.
+    try {
+        await attachBadgeBookUserToSocket(socket);
+        if (socket.isValidBadgeBookUser) {
+            Player.connect(socket);
+            socket.emit('signin-res', { success: true });
+        }
+    } catch (err) {
+        log.trace(`No badgebook user found`);
+    }
 
     socket.on('signin', (data) => {
         isValidPass(data, function (res) {
