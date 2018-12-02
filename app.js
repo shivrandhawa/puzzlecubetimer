@@ -34,6 +34,15 @@ app.post('/api/times/landing', (req, res) => {
         } else {
             try {
                 db.times.find({ bbid: userid }, function (err, docs) {
+                    let temp_doc = docs[0]
+                    var temp_score = "00 : 123 . 456"
+                    if (temp_doc == undefined) {
+                        score = "00 : 123 . 456";
+
+                    } else {
+                        score = docs[0].score;
+                    }
+                    console.log('====================================');
                     var jsonObj = {
                         "request": {
                             "href": "puzzlecubeurl/api/times/",
@@ -46,7 +55,7 @@ app.post('/api/times/landing', (req, res) => {
                                 "img-url": "url",
                                 "link": "www.puzzle.com",
                                 "data": [
-                                    "Best Time: 00 : 11 . 111"
+                                    score
                                 ]
                             }
                         ]
@@ -79,6 +88,7 @@ app.post('/api/times/landing', (req, res) => {
 
 app.post('/api/times', (req, res) => {
 
+
     var token = req.headers['authorization'];
     var userid = req.headers['userid'];
     console.log("userid " + userid + " token:  " + token);
@@ -89,25 +99,34 @@ app.post('/api/times', (req, res) => {
 
     }
     else {
-        if (token != "tzznk") { //TODO: puzzlecube token
-            res.status(403);
+        if (token != "tzznk") { //TODO: Puzzle's cube token here
             res.send("invalid authorization token");
+            res.status(403);
         } else {
             try {
                 db.times.find({ bbid: userid }, function (err, docs) {
+                    let temp_doc = docs[0]
+                    var temp_score = "00 : 123 . 456"
+                    if (temp_doc == undefined) {
+                        score = "00 : 123 . 456";
+
+                    } else {
+                        score = docs[0].score;
+                    }
+                    console.log('====================================');
                     var jsonObj = {
                         "request": {
                             "href": "puzzlecubeurl/api/times/",
                             "userid": userid,
                             "token": token
                         },
-                        "badeData": [
+                        "landingData": [
                             {
                                 "name": "Puzzle Cube Timer",
                                 "img-url": "url",
                                 "link": "www.puzzle.com",
                                 "data": [
-                                    "Best Time: 00 : 11 . 111"
+                                    score
                                 ]
                             }
                         ]
@@ -115,7 +134,23 @@ app.post('/api/times', (req, res) => {
                     res.status(200).json(jsonObj);
                 });
             } catch (err) {
-                res.status(422).json(jsonObj);
+                var jsonObj = {
+                    "request": {
+                        "href": "puzzlecubeurl/api/times/",
+                        "userid": "default user",
+                        "token": "tzznk" //TODO: puzzle cube timer
+                    },
+                    "landingData": [
+                        {
+                            "name": "Puzzle Cube Timer",
+                            "img-url": "url",
+                            "link": "www.puzzle.com",
+                            "data": [
+                                "Best Time: 00 : 123 . 456"
+                            ]
+                        }
+                    ]
+                };
             }
         }
     }
@@ -258,9 +293,7 @@ io.sockets.on('connection', async socket => {
                 if (docs.length > 0) {
                     fname = docs[0].username
                     console.log(docs[0].username);
-                    console.log('====================================');
-                    console.log("as");
-                    console.log('====================================');
+
                     // Player.list[socket.id].name = data.bb_name;
                     Player.connect(socket);
                     PLAYERS[socket.id].badgeid = data.bb_id
