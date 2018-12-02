@@ -164,7 +164,8 @@ var Player = id => {
     var self = {
         time: 0,
         id: id,
-        name: "un_named"
+        name: "un_named",
+        badgeid: "N/A"
     }
     return self;
 }
@@ -226,6 +227,10 @@ io.sockets.on('connection', async socket => {
     socket.on('catch_this', (data) => {
         console.log("caught it:  " + data);
         player.time = data;
+        let bid = PLAYERS[socket.id].badgeid;
+
+        db.times.update({ bbid: bid }, { $set: { score: data } });
+
 
 
     });
@@ -244,6 +249,43 @@ io.sockets.on('connection', async socket => {
             SOCKET_LIST[i].emit('displayMsg', sender + ' - ' + data)
         }
     });
+    socket.on('bb_signin', data => {
+        console.log(data.bb_name + ".." + data.bb_id);
+
+        var fname;
+        try {
+            db.times.find({ bbid: data.bb_id }, function (err, docs) {
+                if (docs.length > 0) {
+                    fname = docs[0].username
+                    console.log(docs[0].username);
+                    console.log('====================================');
+                    console.log("as");
+                    console.log('====================================');
+                    // Player.list[socket.id].name = data.bb_name;
+                    Player.connect(socket);
+                    PLAYERS[socket.id].badgeid = data.bb_id
+                    console.log(PLAYERS[socket.id].badgeid);
+
+                } else {
+                    console.log('=================ss===================');
+
+                    db.times.insert({ bbid: data.bb_id, username: data.bb_name, score: 0 })
+                    Player.connect(socket);
+                    console.log("adding new player to database, name: " + data.bb_name);
+
+                }
+                for (var i in SOCKET_LIST) {
+                    SOCKET_LIST[i].emit('displayMsg', " " + data.bb_name + " joined");
+                    SOCKET_LIST[i].emit("add_player", data.bb_name);
+
+                }
+            });
+        } catch (err) {
+            //TODO: handle error
+        }
+
+    });
+
 });
 
 //TODO: here video 3 .

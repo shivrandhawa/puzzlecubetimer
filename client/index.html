@@ -24,6 +24,8 @@
             <input type="text" id="signin_password">
             <button id="signUp">Sign up!</button>
             <button id="signIn">Sign In!</button>
+            <button id="signinBB">Sign in with BadgeBook</button>
+
         </div>
 
         <div id=timerDiv style="display:none">
@@ -48,7 +50,8 @@
 
         <script src="client/stopwatch.js "></script>
     </body>
-<script src = "./tokenHandler.js"></script>
+    <script src="./tokenHandler.js"></script>
+
 </html>
 <script>
     console.log('running');
@@ -60,8 +63,26 @@
     var signinBtn = document.getElementById('signIn');
     var signupBtn = document.getElementById('signUp');
     var timerDiv = document.getElementById('timerDiv');
+    var signin_BB = document.getElementById('signinBB');
+    let loggedIn = badgeBookTokenHandler.isBadgeBookUserLoggedIn();
 
+    if (loggedIn) {
+        var bb_pack = {
+            bb_name: badgeBookTokenHandler.getCurrentUserClaims().name,
+            bb_id: badgeBookTokenHandler.getCurrentUserClaims().userId
+        }
+        console.log('====================================');
+        console.log(badgeBookTokenHandler.getCurrentUserClaims());
+        console.log('====================================');
+        socket.emit('bb_signin', bb_pack)
+        signDiv.style.display = 'none'
+        timerDiv.style.display = 'inline-block';
+    }
 
+    signin_BB.onclick = () => {
+        badgeBookTokenHandler.loginWithBadgeBook();
+
+    }
     var chatText = document.getElementById('chatText');
     var chatInput = document.getElementById('chatInput');
     var chatForm = document.getElementById('chatForm');
@@ -126,11 +147,11 @@
 
     }
 
-document.body.onkeyup = function(e){
-  keysPressed = [];
-  keysPressed[e.keyCode] = e.type == 'keydown';
-  if(e.keyCode == 68){
-    watch.isOn ? stop() : start(); 
-  }
-}
+    document.body.onkeyup = function (e) {
+        keysPressed = [];
+        keysPressed[e.keyCode] = e.type == 'keydown';
+        if (e.keyCode == 68) {
+            watch.isOn ? stop() : start();
+        }
+    }
 </script>
