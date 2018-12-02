@@ -28,7 +28,7 @@ app.post('/api/times/landing', (req, res) => {
 
     }
     else {
-        if (token != "tzznk") { //TODO: Puzzle's cube token here
+        if (token != "pzzlc") { //TODO: Puzzle's cube token here
             res.send("invalid authorization token");
             res.status(403);
         } else {
@@ -42,10 +42,9 @@ app.post('/api/times/landing', (req, res) => {
                     } else {
                         score = docs[0].score;
                     }
-                    console.log('====================================');
                     var jsonObj = {
                         "request": {
-                            "href": "puzzlecubeurl/api/times/",
+                            "href": "https://puzzlecubetimer.herokuapp.com/api/times/landing/",
                             "userid": userid,
                             "token": token
                         },
@@ -53,7 +52,7 @@ app.post('/api/times/landing', (req, res) => {
                             {
                                 "name": "Puzzle Cube Timer",
                                 "img-url": "url",
-                                "link": "www.puzzle.com",
+                                "link": "https://puzzlecubetimer.herokuapp.com/",
                                 "data": [
                                     score
                                 ]
@@ -65,9 +64,9 @@ app.post('/api/times/landing', (req, res) => {
             } catch (err) {
                 var jsonObj = {
                     "request": {
-                        "href": "puzzlecubeurl/api/times/",
+                        "href": "https://puzzlecubetimer.herokuapp.com/api/times/landing/",
                         "userid": "default user",
-                        "token": "tzznk" //TODO: puzzle cube timer
+                        "token": "pzzlc" //TODO: puzzle cube timer
                     },
                     "landingData": [
                         {
@@ -85,9 +84,7 @@ app.post('/api/times/landing', (req, res) => {
     }
 });
 
-
 app.post('/api/times', (req, res) => {
-
 
     var token = req.headers['authorization'];
     var userid = req.headers['userid'];
@@ -99,7 +96,7 @@ app.post('/api/times', (req, res) => {
 
     }
     else {
-        if (token != "tzznk") { //TODO: Puzzle's cube token here
+        if (token != "pzzlc") { //TODO: Puzzle's cube token here
             res.send("invalid authorization token");
             res.status(403);
         } else {
@@ -113,20 +110,19 @@ app.post('/api/times', (req, res) => {
                     } else {
                         score = docs[0].score;
                     }
-                    console.log('====================================');
                     var jsonObj = {
                         "request": {
-                            "href": "puzzlecubeurl/api/times/",
+                            "href": "https://puzzlecubetimer.herokuapp.com/api/times/",
                             "userid": userid,
                             "token": token
                         },
-                        "landingData": [
+                        "badgeData": [
                             {
                                 "name": "Puzzle Cube Timer",
                                 "img-url": "url",
-                                "link": "www.puzzle.com",
+                                "link": "https://puzzlecubetimer.herokuapp.com",
                                 "data": [
-                                    score
+                                    "most recent time: " + score
                                 ]
                             }
                         ]
@@ -136,15 +132,15 @@ app.post('/api/times', (req, res) => {
             } catch (err) {
                 var jsonObj = {
                     "request": {
-                        "href": "puzzlecubeurl/api/times/",
+                        "href": "https://puzzlecubetimer.herokuapp.com/api/times/",
                         "userid": "default user",
-                        "token": "tzznk" //TODO: puzzle cube timer
+                        "token": "pzzlc" //TODO: puzzle cube timer
                     },
-                    "landingData": [
+                    "badgeData": [
                         {
                             "name": "Puzzle Cube Timer",
                             "img-url": "url",
-                            "link": "www.puzzle.com",
+                            "link": "https://puzzlecubetimer.herokuapp.com/",
                             "data": [
                                 "Best Time: 00 : 123 . 456"
                             ]
