@@ -118,12 +118,9 @@ app.post('/api/times', (req, res) => {
                         },
                         "badgeData": [
                             {
-                                "name": "Puzzle Cube Timer",
+                                "text": "most recent time: " + score,
                                 "img-url": "url",
                                 "link": "https://puzzlecubetimer.herokuapp.com",
-                                "data": [
-                                    "most recent time: " + score
-                                ]
                             }
                         ]
                     };
@@ -134,16 +131,13 @@ app.post('/api/times', (req, res) => {
                     "request": {
                         "href": "https://puzzlecubetimer.herokuapp.com/api/times/",
                         "userid": "default user",
-                        "token": "pzzlc" //TODO: puzzle cube timer
+                        "token": "pzzlc"
                     },
                     "badgeData": [
                         {
-                            "name": "Puzzle Cube Timer",
+                            "text": "Most recent time: " + score,
                             "img-url": "url",
-                            "link": "https://puzzlecubetimer.herokuapp.com/",
-                            "data": [
-                                "Best Time: 00 : 123 . 456"
-                            ]
+                            "link": "https://puzzlecubetimer.herokuapp.com",
                         }
                     ]
                 };
