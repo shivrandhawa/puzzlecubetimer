@@ -51,7 +51,7 @@ app.post('/api/times/landing', (req, res) => {
                         "landingData": [
                             {
                                 "name": "Puzzle Cube Timer",
-                                "img-url": "url",
+                                "img-url": "https://lh4.ggpht.com/mfM7IDaCX4XVS-wiXh7cbTGs56B1-oyU1e1AaXycaR1pqjObAIjeX9UZN30Wpn5btvc=w300",
                                 "link": "https://puzzlecubetimer.herokuapp.com/",
                                 "data": [
                                     "Solved in: " + score
@@ -71,7 +71,7 @@ app.post('/api/times/landing', (req, res) => {
                     "landingData": [
                         {
                             "name": "Puzzle Cube Timer",
-                            "img-url": "url",
+                            "img-url": "https://lh4.ggpht.com/mfM7IDaCX4XVS-wiXh7cbTGs56B1-oyU1e1AaXycaR1pqjObAIjeX9UZN30Wpn5btvc=w300",
                             "link": "www.puzzle.com",
                             "data": [
                                 "Best Time: 00 : 123 . 456"
@@ -119,7 +119,7 @@ app.post('/api/times', (req, res) => {
                         "badgeData": [
                             {
                                 "text": "most recent time: " + score,
-                                "img-url": "url",
+                                "img-url": "https://lh4.ggpht.com/mfM7IDaCX4XVS-wiXh7cbTGs56B1-oyU1e1AaXycaR1pqjObAIjeX9UZN30Wpn5btvc=w300",
                                 "link": "https://puzzlecubetimer.herokuapp.com",
                             }
                         ]
@@ -136,7 +136,7 @@ app.post('/api/times', (req, res) => {
                     "badgeData": [
                         {
                             "text": "Most recent time: " + score,
-                            "img-url": "url",
+                            "img-url": "https://lh4.ggpht.com/mfM7IDaCX4XVS-wiXh7cbTGs56B1-oyU1e1AaXycaR1pqjObAIjeX9UZN30Wpn5btvc=w300",
                             "link": "https://puzzlecubetimer.herokuapp.com",
                         }
                     ]
