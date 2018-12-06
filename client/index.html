@@ -2,11 +2,15 @@
 <html>
 
 <body background="../client/resources/rubix2.jpg">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Puzzle Cube Timer</title>
         <!-- socket CDN -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Kameron" rel="stylesheet">
         <link rel="stylesheet" href="../client/resources/style.css" type="text/css">
@@ -15,23 +19,36 @@
 
     <body>
 
-        <div id="signDiv">
-            <button id="signinBB">Sign in with BadgeBook</button>
-        </div>
+        <div class="w3-container w3-center fullWidth">
+            <div class="fullWidth centered">
 
-        <div id=timerDiv style="display:none">
-            <h1 id="timer">00 : 00 : 000</h1>
-            <div id=buttonDiv>
-                <button class="btn blue" id="toggle" onclick="start() ">Start</button>
-                <button class="btn red" id="reset" onclick="stop() ">Stop</button>
-                <button class="btn green" id="saveTime " onclick="send_time() ">Send</button>
+                <h1 class="w3-jumbo">Puzzle Cube Timer</h1>
+
+                <div id="signDiv">
+                    <button id="signinBB">Sign in with BadgeBook</button>
+                </div>
+
+            </div>
+
+            <div id=timerDiv style="display:none">
+                <h1 id="timer">00 : 00 : 000</h1>
+                <div id=buttonDiv>
+                    <button class="btn blue" id="toggle" onclick="start() ">Start</button>
+                    <button class="btn red" id="reset" onclick="stop() ">Stop</button>
+                    <button class="btn green" id="saveTime " onclick="send_time() ">Send</button>
+      
+                </div>
+
             </div>
 
         </div>
+
+        <script src="./scripts/stopwatch.js"></script>
+
     </body>
 
-    <script src="../client/scripts/stopwatch.js "></script>
-    <script src="../client/scripts/tokenHandler.js"></script>
-    <script src="../client/scripts/main.js"></script>
+   
+    <script src="./scripts/tokenHandler.js"></script>
+    <script src="./scripts/main.js"></script>
 
 </html>

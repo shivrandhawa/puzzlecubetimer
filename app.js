@@ -256,8 +256,6 @@ io.sockets.on('connection', async socket => {
 
         db.times.update({ bbid: bid }, { $set: { score: data } });
 
-
-
     });
 
     socket.on('disconnect', () => {
